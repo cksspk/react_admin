@@ -33,6 +33,23 @@
                 modifyVars: { '@primary-color': '#1DA57A' },
             }),
          );
-    		
 
 
+
+## 2.引入路由
+
+>js结尾不一定是组件，jsx结尾是组件,一般src下面App和index使用js，其他使用jsx
+```
+1). 下载路由包
+	$ yarn add react-router-dom
+2). 组件导入
+	在App.js下导入
+	import {BrowserRouter,Route} from 'react-router-dom'
+	<BrowserRouter>
+        <Switch>{/*只匹配其中一个,如果有匹配/组件的Route需要放在最后，不然所有路径返回/组件*/}
+        	{/*主界面使用 / 路径*/}
+            <Route path='/login' component = {Login}></Route>
+            <Route path = '/' component={Admin}></Route>
+         </Switch>
+    </BrowserRouter>
+```
