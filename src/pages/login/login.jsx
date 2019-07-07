@@ -10,7 +10,7 @@ import { Form, Icon, Input, Button, message} from 'antd';
 import './login.less'
 
 //加载图片logo
-import logo from './imgs/logo.png'
+import logo from '../../assets/images/logo.png'
 
 //引入请求后台的api， 分别暴露方式（export）需要指定引入
 import  { reqLogin } from '../../api'
