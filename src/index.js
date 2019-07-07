@@ -9,6 +9,15 @@
  //引入自定义模块
  import App from './App'
 
+//读取local中保存的user，保存到内存中
+import storageUtils from './utils/storageUtils'
+import memoryUtils from './utils/memoryUtils'
+
+const user = storageUtils.getUser()
+memoryUtils.user = user;
+
+
+
  //将App组件渲染到index页面的div上
  ReactDOM.render(<App/>,document.getElementById('root'))
  
