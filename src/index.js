@@ -19,5 +19,4 @@ memoryUtils.user = user;
 
 
  //将App组件渲染到index页面的div上
- ReactDOM.render(<App/>,document.getElementById('root'))
- 
+ ReactDOM.render(<App/>,document.getElementById('root'));
