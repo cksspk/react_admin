@@ -67,6 +67,7 @@ const { SubMenu } = Menu;
         // 得到当前请求的路由路径
         const path = this.props.location.pathname;
 
+
         return menuList.reduce((pre, item) => {
             // 如果当前用户有item对应的权限, 才需要显示对应的菜单项
             // if (this.hasAuth(item)) {
@@ -81,7 +82,7 @@ const { SubMenu } = Menu;
                         </Menu.Item>
                     ))
                 } else {
-                    // 查找一个与当前请求路径匹配的子Item
+                    // 查找一个与当前请求路径匹配的子Item  根据下标匹配 /a  /a/b  匹配
                     const cItem = item.children.find(cItem => path.indexOf(cItem.key)===0)
                     // 如果存在, 说明当前item的子列表需要打开
                     if (cItem) {
@@ -120,6 +121,9 @@ const { SubMenu } = Menu;
         // 得到当前请求的路由路径
         let path = this.props.location.pathname
         console.log('render()', path)
+        if(path.indexOf('/product')===0){//当前请求的是商品路由或其子界面
+            path = './product'
+        }
 
         // 得到需要打开菜单项的key
         const openKey = this.openKey

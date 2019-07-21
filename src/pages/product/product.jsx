@@ -5,6 +5,7 @@ import ProductHome from './home'
 import ProductAddUpdate from './add-update'
 import ProductDetail from './detail'
 
+import './product.less' //父组件引入样式，子组件可共享
 /**
  * 商品路由
  */
