@@ -51,7 +51,6 @@ export default class ProductHome extends Component{
             {
                 width:100,//指定列表宽度
                 title: '状态',
-                dataIndex: 'status',
                 // dataIndex: 'status',
 
                 render: (product) => {
@@ -156,7 +155,7 @@ export default class ProductHome extends Component{
         )
 
         const extra = (
-            <Button type='primary'>
+            <Button type='primary' onClick = {() =>this.props.history.push('./product/addupdate')}>
                 添加商品
             </Button>
 

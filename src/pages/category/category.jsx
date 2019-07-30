@@ -73,8 +73,8 @@ export default class Category extends  Component {
                 render: (category) => ( // 返回需要显示的界面标签
                     <span>
             <LinkButton onClick={() => this.showUpdate(category)}>修改分类</LinkButton>
-                        {/*如何向事件回调函数传递参数: 先定义一个匿名函数, 在函数调用处理的函数并传入数据 组件函数无法传值问题*/}
-                        {this.state.parentId==='0' ? <LinkButton onClick={() => this.showSubCategorys(category)}>查看子分类</LinkButton> : null}
+            {/*如何向事件回调函数传递参数: 先定义一个匿名函数, 在函数调用处理的函数并传入数据 组件函数无法传值问题*/}
+            {this.state.parentId==='0' ? <LinkButton onClick={() => this.showSubCategorys(category)}>查看子分类</LinkButton> : null}
 
           </span>
                 )

@@ -11,7 +11,7 @@ import {
 } from 'antd'
 
 import PicturesWall from './pictures-wall'
-// import RichTextEditor from './rich-text-editor'
+import RichTextEditor from './rich-text-editor'
 import LinkButton from '../../components/link-button'
 import {reqCategorys, reqAddOrUpdateProduct} from '../../api'
 
@@ -133,10 +133,39 @@ class ProductAddUpdate extends Component{
 
     submit = ()=>{
         //进行表单验证，如果通过了，发送请求
-        this.props.form.validateFields((error,values)=>{
+        this.props.form.validateFields(async (error,values)=>{
             if(!error){
                 // 1. 收集数据, 并封装成product对象
-                alert('提交ajax')
+                const {name, desc, price, categoryIds} = values
+                let pCategoryId, categoryId
+                if (categoryIds.length===1) {   //当前是一级分类
+                    pCategoryId = '0'
+                    categoryId = categoryIds[0]
+                } else {                        //取出一级分类和二级分类
+                    pCategoryId = categoryIds[0]
+                    categoryId = categoryIds[1]
+                }
+                const imgs = this.pw.current.getImgs()
+                const detail = this.editor.current.getDetail()
+
+                const product = {name, desc, price, imgs, detail, pCategoryId, categoryId}
+
+                // 如果是更新, 需要添加_id
+                if(this.isUpdate) {
+                    product._id = this.product._id
+                }
+
+                // 2. 调用接口请求函数去添加/更新
+                const result = await reqAddOrUpdateProduct(product)
+
+                // 3. 根据结果提示
+                if (result.status===0) {
+                    message.success(`${this.isUpdate ? '更新' : '添加'}商品成功!`)
+                    this.props.history.goBack()
+                } else {
+                    message.error(`${this.isUpdate ? '更新' : '添加'}商品失败!`)
+                }
+                // alert('提交ajax')
             }
         })
     }
@@ -244,8 +273,8 @@ class ProductAddUpdate extends Component{
                     <Item label="商品图片">
                         <PicturesWall ref={this.pw} imgs={imgs}/>
                     </Item>
-                    <Item label="商品详情">
-                        <div>商品详情</div>
+                    <Item label="商品详情" labelCol = {{span:2}} wrapperCol= {{span: 20}} >
+                        <RichTextEditor ref = {this.editor} detail={detail}/>
                     </Item>
                     <Item>
                        <Button type='primary' onClick={this.submit}>提交</Button>
