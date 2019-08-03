@@ -4,7 +4,6 @@ import {
     Select,
     Input,
     Button,
-    Icon,
     Table,
     message
 } from 'antd'

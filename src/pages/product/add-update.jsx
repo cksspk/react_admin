@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React,{PureComponent} from 'react'
 
 import {
     Card,
@@ -21,7 +21,7 @@ const {TextArea} = Input;
 /**
  * Product的子路由组件
  */
-class ProductAddUpdate extends Component{
+class ProductAddUpdate extends PureComponent{
     state = {
         options:[]
     }
@@ -125,7 +125,7 @@ class ProductAddUpdate extends Component{
 
         //更新option状态
         this.setState({
-            options: this.state.options,
+            options: [...this.state.options],
         });
 
     };

@@ -70,7 +70,7 @@ export default class AuthForm extends PureComponent {
         this.setState({
             checkedKeys: menus
         })
-        // this.state.checkedKeys = menus
+        // this.state.checkedKeys = menus 本质与上方一致，都会触发render
     }
 
     render() {
