@@ -1,8 +1,12 @@
 import React,{Component} from 'react'
 
+// 引入redux
+import { connect} from "react-redux";
+
+
 
 //引入对象保存数据，
-import memoryUtils from '../../utils/memoryUtils'
+// import memoryUtils from '../../utils/memoryUtils'
 
 //引入Redirect标签，重定向 //引入路由组件
 import {Redirect, Route, Switch} from 'react-router-dom'
@@ -30,11 +34,13 @@ const { Content, Footer, Sider } = Layout;
 /**
  * 后台管理的路由组件
  */
-export default class Admin extends  Component {
+class Admin extends  Component {
 
     render(){
-        const user = memoryUtils.user;
-        //如果内存中没有存储user ===> 当前没有登录
+        // const user = memoryUtils.user;   //如果内存中没有存储user ===> 当前没有登录
+
+
+        const user = this.props.user         //从redux中取数据
         if(!user || !user._id){
             //在render中跳转到登录界面
             return <Redirect to = '/login'></Redirect>
@@ -66,3 +72,7 @@ export default class Admin extends  Component {
         )
     }
 }
+export default connect(
+    state => ({user : state.user}),
+    {}
+)(Admin)

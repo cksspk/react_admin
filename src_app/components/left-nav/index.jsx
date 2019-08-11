@@ -3,6 +3,10 @@ import React,{Component} from 'react'
 //导入menu数据
 import menuList from '../../config/menuConfig'
 
+//引入redux
+import {connect} from "react-redux";
+import { setHeaderTitle } from '../../redux/action'
+
 //引入link组件,点击路由跳转功能
 import { Link,withRouter} from 'react-router-dom'
 
@@ -15,7 +19,7 @@ import './index.less'
 //引入logo
 import logo from '../../assets/images/logo.png'
 
-import memoryUtils from "../../utils/memoryUtils"
+// import memoryUtils from "../../utils/memoryUtils"
 
 //菜单项单独引入
 const { SubMenu } = Menu;
@@ -31,8 +35,13 @@ const { SubMenu } = Menu;
     hasAuth = (item) => {
         const {key, isPublic} = item
 
-        const menus = memoryUtils.user.role.menus
-        const username = memoryUtils.user.username
+        // const menus = memoryUtils.user.role.menus
+        // const username = memoryUtils.user.username
+
+        const menus = this.props.user.role.menus
+        const username = this.props.user.usernam
+
+
         /*
         1. 如果当前用户是admin
         2. 如果当前item是公开的
@@ -98,9 +107,14 @@ const { SubMenu } = Menu;
             if (this.hasAuth(item)) {
                 // 向pre添加<Menu.Item>
                 if(!item.children) {
+                    //判断item是否对应当前item
+                    if(item.key === path || path.indexOf(item.key) === 0){
+                        //更新redux中headTitle状态
+                        this.props.setHeaderTitle(item.title)
+                    }
                     pre.push((
                         <Menu.Item key={item.key}>
-                            <Link to={item.key}>
+                            <Link to={item.key} onClick={() =>this.props.setHeaderTitle(item.title)}>
                                 <Icon type={item.icon}/>
                                 <span>{item.title}</span>
                             </Link>
@@ -223,4 +237,7 @@ withRouter高阶组件:
 包装非路由组件, 返回一个新的组件
 新的组件向非路由组件传递3个属性: history/location/match
  */
-export default withRouter(LeftNav)
+export default connect(
+    state => ({user:state.user}),
+    {setHeaderTitle}
+)( withRouter(LeftNav))

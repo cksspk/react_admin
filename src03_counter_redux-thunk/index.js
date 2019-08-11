@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import App from "./containers/App";
 
 import store from './redux/store'
-import {Provider} from './lib/react-redux'
+import {Provider} from 'react-redux'
 
 //将App组件渲染到index页面的div上
 ReactDOM.render((

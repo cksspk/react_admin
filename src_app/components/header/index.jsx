@@ -6,12 +6,20 @@ import {withRouter} from 'react-router-dom'
 import menuList from '../../config/menuConfig'
 import { Modal} from 'antd'
 
+//引入redux
+import {connect} from "react-redux";
+
+import {logout} from '../../redux/action'
+
 import {reqWeather} from "../../api";
+
+
+
 //导入时间插件
 import {formateDate} from '../../utils/dateUtils'
 //导入用户组件
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
+// import memoryUtils from '../../utils/memoryUtils'
+// import storageUtils from '../../utils/storageUtils'
 //引入自定义样式
 import './index.less'
 import LinkButton from "../link-button";
@@ -73,11 +81,13 @@ class Header extends  Component {
             onOk: () => {
                 console.log('OK', this)
                 // 删除保存的user数据
-                storageUtils.removeUser()
-                memoryUtils.user = {}
+                // storageUtils.removeUser()
+                // memoryUtils.user = {}
 
-                // 跳转到login
-                this.props.history.replace('/login')
+                this.props.logout()
+
+                // // 跳转到login
+                // this.props.history.replace('/login')
             }
         })
     }
@@ -101,11 +111,15 @@ class Header extends  Component {
     }
     render(){
         const {currentTime,dayPictureUrl,weather} = this.state;
-        const username = memoryUtils.user.username;
+        // const username = memoryUtils.user.username;
+        const username = this.props.user.username;
+
         //得到当前需要显示的title
-        const title = this.getTitle();
+        // const title = this.getTitle();
+        //接受redux中的headTitle
+        const title = this.props.headTitle
         return (
-                <div className="header">
+            <div className="header">
                    <div className="header-top">
                         <span>欢迎，{username}</span>
                        {/*<a href="javascript:" onClick={this.logout}>退出</a>*/}
@@ -124,4 +138,7 @@ class Header extends  Component {
     }
 }
 //返回高级组件
-export default withRouter(Header)
+export default connect(
+    state =>({headTitle : state.headTitle, user : state.user}),
+    {logout}
+)(withRouter(Header))
